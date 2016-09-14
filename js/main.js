@@ -4,21 +4,21 @@ var edges = [];
 var nodes = [];
 
 function generateGraph() {
-    parseCode(null);
+    parseCode(DEFAULT_LANGUAGE);
+    setElementPositions(createPositionalGraph());
+    graphElements();
 }
 
 function parseCode(language) {
     var code = document.getElementById('code').value;
     var lines = code.split('\n');
-    if (language === null) {
-        language = DEFAULT_LANGUAGE;
-    }
 
     for (var i = 0; i < lines.length; i++) {
         var lineOfCode = lines[i].trim();
         if (!shouldParse(lineOfCode, language)) {
             continue;
         }
+
         var element = createElements(i, lineOfCode, language);
         if (element.type === ELEMENT_TYPES.NODE) {
             if (i < lines.length - 1 && needsEdge(lines[i + 1].trim(), language)) {
@@ -29,14 +29,10 @@ function parseCode(language) {
             edges.push(element.core);
         }
     }
-
-    setElementPositions(createPositionalGraph());
-    graphElements();
 }
 
-// TODO: Make this language-dependent
 function shouldParse(line, language) {
-    return line !== '}' && line !== '{' && line !== ';' && line !== ''
+    return LANGUAGE_PATTERNS[language].IGNORED_LINES.indexOf(line) === -1;
 }
 
 function createElements(id, line, language) {
@@ -66,7 +62,7 @@ function createElements(id, line, language) {
                 data: {
                     id: id,
                     code: line
-                },
+                }
             }
         };
     }
@@ -75,7 +71,7 @@ function createElements(id, line, language) {
 function needsEdge(line, language) {
     return !(LANGUAGE_PATTERNS[language].IF_CHECK.test(line) || LANGUAGE_PATTERNS[language].ELSE_IF_CHECK.test(line) ||
     LANGUAGE_PATTERNS[language].ELSE_CHECK.test(line) || LANGUAGE_PATTERNS[language].WHILE_CHECK.test(line) ||
-    LANGUAGE_PATTERNS[language].FOR_CHECK.test(line) || !shouldParse(line));
+    LANGUAGE_PATTERNS[language].FOR_CHECK.test(line) || !shouldParse(line, language));
 }
 
 function createEdge(source, target) {

@@ -13,7 +13,8 @@ const LANGUAGE_PATTERNS = {
         'FOR_CHECK': /\s*for\s*\(\s*\s*\)\s*/i, // TODO: Add for loop syntax checking
         'LINE_END': ';',
         'CONDITION_START': '(',
-        'CONDITION_END': ')'
+        'CONDITION_END': ')',
+        'IGNORED_LINES': ['{', '}', '']
     }
 };
 const CONDITION_TYPES = {
