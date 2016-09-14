@@ -10,8 +10,7 @@ function generateGraph() {
 }
 
 function parseCode(language) {
-    var code = document.getElementById('code').value;
-    var lines = code.split('\n');
+    var lines = document.getElementById('code').value.split('\n');
 
     for (var i = 0; i < lines.length; i++) {
         var lineOfCode = lines[i].trim();
@@ -88,15 +87,16 @@ function createEdge(source, target) {
 function parseCondition(line, type, language) {
     switch (type) {
         case CONDITION_TYPES.IF:
-            return parseIf(line, language);
+            return getCondition(line, LANGUAGE_PATTERNS[language].CONDITION_START,
+                LANGUAGE_PATTERNS[language].CONDITION_END);
         default:
-            return 'UNSUPPORTED CONDITION SYNTAX'
+            throw 'UNSUPPORTED CONDITION SYNTAX'
     }
 }
 
-function parseIf(line, language) {
-    var startConditionIndex = line.indexOf(LANGUAGE_PATTERNS[language].CONDITION_START);
-    var endConditionIndex = line.lastIndexOf(LANGUAGE_PATTERNS[language].CONDITION_END);
+function getCondition(line, conditionStart, conditionEnd) {
+    var startConditionIndex = line.indexOf(conditionStart);
+    var endConditionIndex = line.lastIndexOf(conditionEnd);
     return line.slice(startConditionIndex + 1, endConditionIndex);
 }
 
