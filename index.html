@@ -7,33 +7,34 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="css/normalize.min.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="res/css/normalize.min.css">
+        <link rel="stylesheet" href="res/css/main.css">
 
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-        <script src="js/vendor/jquery-1.11.2.js"></script>
-        <script src="js/vendor/dagre.js"></script>
-        <script src="js/vendor/cytoscape.js"></script>
+        <script src="res/js/lib/modernizr-2.8.3.min.js"></script>
+        <script src="res/js/lib/jquery-1.11.2.js"></script>
+        <script src="res/js/lib/dagre.js"></script>
+        <script src="res/js/lib/cytoscape.js"></script>
+        <script src="res/js/lang/Lexer.js"></script>
+        <script src="res/js/main.js"></script>
+        <script src="res/js/lib/unit.js"></script>
+        <script src="res/js/test/LexerTest.js"></script>
     </head>
     <body>
         <div class="app">
             <div class="title">
                 <h1>Welcome to Code2DFA</h1>
+                <h5>
+                    [&check;]       Stage 1: Tokenize code following JavaScript/Java/C++/C syntax.<br>
+                    [&nbsp;&nbsp;]  Stage 2: Parse code to extract context into tree structure.
+                </h5>
             </div>
-
-            <div class="script">
-                <script src="js/main.js"></script>
-            </div>
-
             <div class="code-submission">
                 <textarea rows="10" cols="50" id="code" title="code"></textarea><br>
                 <button onclick="generateGraph()">Generate DFA</button>
             </div>
-
         </div>
-
         <div class="cy" id="cy">
-            <script src="js/cy.js"></script>
+            <script src="res/js/cy.js"></script>
         </div>
     </body>
 </html>
